@@ -18298,7 +18298,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var CARDS_HIERARCHY = ['JACK_OF_CLUBS', 'JACK_OF_SPADES', 'JACK_OF_HEARTS', 'JACK_OF_DIAMONDS', '10', 'KING', 'QUEEN', '9', '8', '7'];
+var CARDS_HIERARCHY = ['JACK_OF_CLUBS', 'JACK_OF_SPADES', 'JACK_OF_HEARTS', 'JACK_OF_DIAMONDS', 'ACE', '10', 'KING', 'QUEEN', '9', '8', '7'];
 
 var MultiplierCalculator = function (_React$Component) {
     _inherits(MultiplierCalculator, _React$Component);
@@ -18312,7 +18312,7 @@ var MultiplierCalculator = function (_React$Component) {
             typeOfGame: 'color',
             color: 'clubs',
             selectedCards: [],
-            peak: 1,
+            peak: 11,
             mode: 'without'
         };
 
@@ -18328,7 +18328,7 @@ var MultiplierCalculator = function (_React$Component) {
             this.setState({
                 typeOfGame: event.target.value,
                 selectedCards: []
-            });
+            }, this.recalculatePeak);
         }
     }, {
         key: 'handleColorChange',
@@ -18338,39 +18338,57 @@ var MultiplierCalculator = function (_React$Component) {
     }, {
         key: 'recalculatePeak',
         value: function recalculatePeak() {
+            console.log('Calculating peak ' + this.state.selectedCards);
+            var mode = this.state.selectedCards.indexOf('JACK_OF_CLUBS') !== -1 ? 'with' : 'without';
+
             var peak = 0;
 
-            for (var index = 0; index < CARDS_HIERARCHY.length; index++) {
-                if (this.state.selectedCards.indexOf(CARDS_HIERARCHY[index]) !== -1) {
-                    peak++;
-                    continue;
-                }
+            var hierarchyLength = this.state.typeOfGame === 'color' ? 11 : 4;
 
-                break;
+            if (mode === 'with') {
+                for (var index = 0; index < hierarchyLength; index++) {
+                    if (this.state.selectedCards.indexOf(CARDS_HIERARCHY[index]) !== -1) {
+                        peak++;
+                        continue;
+                    }
+
+                    break;
+                }
+            }
+
+            if (mode === 'without') {
+                for (var _index = 0; _index < hierarchyLength; _index++) {
+                    if (this.state.selectedCards.indexOf(CARDS_HIERARCHY[_index]) === -1) {
+                        peak++;
+                        continue;
+                    }
+
+                    break;
+                }
             }
 
             this.setState({
+                mode: mode,
                 peak: peak
             });
         }
     }, {
         key: 'switchCard',
         value: function switchCard(card) {
+            console.log('Switching ' + card);
             if (this.state.selectedCards.indexOf(card) === -1) {
                 return this.setState({
                     selectedCards: [].concat(_toConsumableArray(this.state.selectedCards), [card])
-                });
+                }, this.recalculatePeak);
             }
 
             var selectedCards = this.state.selectedCards.filter(function (selectedCard) {
                 return selectedCard !== card;
             });
 
-            this.recalculatePeak();
-
-            this.setState({
+            return this.setState({
                 selectedCards: selectedCards
-            });
+            }, this.recalculatePeak);
         }
     }, {
         key: 'getFigureClassNames',
@@ -18492,7 +18510,9 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement(
                             'figure',
-                            { className: 'image is-marginless is-fullwidth' },
+                            { className: this.getFigureClassNames('JACK_OF_SPADES'), onClick: function onClick() {
+                                    return _this2.switchCard('JACK_OF_SPADES');
+                                } },
                             _react2.default.createElement('img', { src: '/figures/jack_of_spades2.svg' })
                         )
                     ),
@@ -18501,7 +18521,9 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement(
                             'figure',
-                            { className: 'image is-marginless is-fullwidth' },
+                            { className: this.getFigureClassNames('JACK_OF_HEARTS'), onClick: function onClick() {
+                                    return _this2.switchCard('JACK_OF_HEARTS');
+                                } },
                             _react2.default.createElement('img', { src: '/figures/jack_of_hearts2.svg' })
                         )
                     ),
@@ -18510,7 +18532,9 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement(
                             'figure',
-                            { className: 'image is-marginless is-fullwidth' },
+                            { className: this.getFigureClassNames('JACK_OF_DIAMONDS'), onClick: function onClick() {
+                                    return _this2.switchCard('JACK_OF_DIAMONDS');
+                                } },
                             _react2.default.createElement('img', { src: '/figures/jack_of_diamonds2.svg' })
                         )
                     ),
@@ -18519,7 +18543,9 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement(
                             'figure',
-                            { className: 'image is-marginless is-fullwidth' },
+                            { className: this.getFigureClassNames('ACE'), onClick: function onClick() {
+                                    return _this2.switchCard('ACE');
+                                } },
                             _react2.default.createElement('img', { src: '/figures/ace_of_' + this.state.color + '.svg' })
                         )
                     ),
@@ -18528,7 +18554,9 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement(
                             'figure',
-                            { className: 'image is-marginless is-fullwidth' },
+                            { className: this.getFigureClassNames('10'), onClick: function onClick() {
+                                    return _this2.switchCard('10');
+                                } },
                             _react2.default.createElement('img', { src: '/figures/10_of_' + this.state.color + '.svg' })
                         )
                     ),
@@ -18537,7 +18565,9 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement(
                             'figure',
-                            { className: 'image is-marginless is-fullwidth' },
+                            { className: this.getFigureClassNames('KING'), onClick: function onClick() {
+                                    return _this2.switchCard('KING');
+                                } },
                             _react2.default.createElement('img', { src: '/figures/king_of_' + this.state.color + '2.svg' })
                         )
                     ),
@@ -18546,8 +18576,10 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement(
                             'figure',
-                            { className: 'image is-marginless is-fullwidth' },
-                            _react2.default.createElement('img', { src: '/figures/queen_of_' + this.state.color + '.svg' })
+                            { className: this.getFigureClassNames('QUEEN'), onClick: function onClick() {
+                                    return _this2.switchCard('QUEEN');
+                                } },
+                            _react2.default.createElement('img', { src: '/figures/queen_of_' + this.state.color + '2.svg' })
                         )
                     ),
                     _react2.default.createElement(
@@ -18555,7 +18587,9 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement(
                             'figure',
-                            { className: 'image is-marginless is-fullwidth' },
+                            { className: this.getFigureClassNames('9'), onClick: function onClick() {
+                                    return _this2.switchCard('9');
+                                } },
                             _react2.default.createElement('img', { src: '/figures/9_of_' + this.state.color + '.svg' })
                         )
                     ),
@@ -18564,7 +18598,9 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement(
                             'figure',
-                            { className: 'image is-marginless is-fullwidth' },
+                            { className: this.getFigureClassNames('8'), onClick: function onClick() {
+                                    return _this2.switchCard('8');
+                                } },
                             _react2.default.createElement('img', { src: '/figures/8_of_' + this.state.color + '.svg' })
                         )
                     ),
@@ -18573,7 +18609,9 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement(
                             'figure',
-                            { className: 'image is-marginless is-fullwidth' },
+                            { className: this.getFigureClassNames('7'), onClick: function onClick() {
+                                    return _this2.switchCard('7');
+                                } },
                             _react2.default.createElement('img', { src: '/figures/7_of_' + this.state.color + '.svg' })
                         )
                     )
@@ -18586,7 +18624,9 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement(
                             'figure',
-                            { className: 'image is-marginless is-fullwidth' },
+                            { className: this.getFigureClassNames('JACK_OF_CLUBS'), onClick: function onClick() {
+                                    return _this2.switchCard('JACK_OF_CLUBS');
+                                } },
                             _react2.default.createElement('img', { src: '/figures/jack_of_clubs2.svg' })
                         )
                     ),
@@ -18595,7 +18635,9 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement(
                             'figure',
-                            { className: 'image is-marginless is-fullwidth' },
+                            { className: this.getFigureClassNames('JACK_OF_SPADES'), onClick: function onClick() {
+                                    return _this2.switchCard('JACK_OF_SPADES');
+                                } },
                             _react2.default.createElement('img', { src: '/figures/jack_of_spades2.svg' })
                         )
                     ),
@@ -18604,7 +18646,9 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement(
                             'figure',
-                            { className: 'image is-marginless is-fullwidth' },
+                            { className: this.getFigureClassNames('JACK_OF_HEARTS'), onClick: function onClick() {
+                                    return _this2.switchCard('JACK_OF_HEARTS');
+                                } },
                             _react2.default.createElement('img', { src: '/figures/jack_of_hearts2.svg' })
                         )
                     ),
@@ -18613,7 +18657,9 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement(
                             'figure',
-                            { className: 'image is-marginless is-fullwidth' },
+                            { className: this.getFigureClassNames('JACK_OF_DIAMONDS'), onClick: function onClick() {
+                                    return _this2.switchCard('JACK_OF_DIAMONDS');
+                                } },
                             _react2.default.createElement('img', { src: '/figures/jack_of_diamonds2.svg' })
                         )
                     ),
@@ -18633,6 +18679,13 @@ var MultiplierCalculator = function (_React$Component) {
                         { className: 'column' },
                         _react2.default.createElement('progress', { className: this.getPeakProgressClassNames(), value: this.state.peak, max: '11' })
                     )
+                ),
+                _react2.default.createElement(
+                    'h3',
+                    { className: 'title is-3' },
+                    this.state.mode === 'with' ? 'Z' : 'BEZ',
+                    ' ',
+                    this.state.peak
                 )
             );
         }

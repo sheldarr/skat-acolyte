@@ -7,6 +7,7 @@ const CARDS_HIERARCHY = [
     'JACK_OF_SPADES',
     'JACK_OF_HEARTS',
     'JACK_OF_DIAMONDS',
+    'ACE',
     '10',
     'KING',
     'QUEEN',
@@ -23,7 +24,7 @@ class MultiplierCalculator extends React.Component {
             typeOfGame: 'color',
             color: 'clubs',
             selectedCards: [],
-            peak: 1,
+            peak: 11,
             mode: 'without'
         };
 
@@ -36,7 +37,7 @@ class MultiplierCalculator extends React.Component {
         this.setState({
             typeOfGame: event.target.value,
             selectedCards: []
-        });
+        }, this.recalculatePeak);
     }
 
     handleColorChange(event) {
@@ -44,36 +45,56 @@ class MultiplierCalculator extends React.Component {
     }
 
     recalculatePeak() {
+        console.log(`Calculating peak ${this.state.selectedCards}`)
+        const mode = this.state.selectedCards.indexOf('JACK_OF_CLUBS') !== -1
+            ? 'with'
+            : 'without';
+
         let peak = 0;
 
-        for (let index = 0; index < CARDS_HIERARCHY.length; index++) {
-            if(this.state.selectedCards.indexOf(CARDS_HIERARCHY[index]) !== -1) {
-                peak++;
-                continue;
+        const hierarchyLength = this.state.typeOfGame === 'color' ? 11 : 4;
+
+        if(mode === 'with') {
+            for (let index = 0; index < hierarchyLength; index++) {
+                if(this.state.selectedCards.indexOf(CARDS_HIERARCHY[index]) !== -1) {
+                    peak++;
+                    continue;
+                }
+                
+                break
             }
-            
-            break
+        }
+
+        if(mode === 'without') {
+            for (let index = 0; index < hierarchyLength; index++) {
+                if(this.state.selectedCards.indexOf(CARDS_HIERARCHY[index]) === -1) {
+                    peak++;
+                    continue;
+                }
+                
+                break
+            }
         }
 
         this.setState({
+            mode,
             peak
         });
     }
 
     switchCard(card) {
+        console.log(`Switching ${card}`)
         if(this.state.selectedCards.indexOf(card) === -1) {
             return this.setState({
                 selectedCards: [...this.state.selectedCards, card]
-            });
+            }, this.recalculatePeak);
         }
 
         const selectedCards = this.state.selectedCards.filter((selectedCard) => selectedCard !== card);
 
-        this.recalculatePeak();
-
-        this.setState({
+        return this.setState({
             selectedCards
-        });
+        }, this.recalculatePeak);
     }
 
     getFigureClassNames(card) {
@@ -138,52 +159,52 @@ class MultiplierCalculator extends React.Component {
                         </figure>
                     </div>
                     <div className="column">
-                        <figure className="image is-marginless is-fullwidth">
+                        <figure className={this.getFigureClassNames('JACK_OF_SPADES')} onClick={() => this.switchCard('JACK_OF_SPADES')}>
                             <img src="/figures/jack_of_spades2.svg" />
                         </figure>
                     </div>
                     <div className="column">
-                        <figure className="image is-marginless is-fullwidth">
+                        <figure className={this.getFigureClassNames('JACK_OF_HEARTS')} onClick={() => this.switchCard('JACK_OF_HEARTS')}>
                             <img src="/figures/jack_of_hearts2.svg" />
                         </figure>
                     </div>
                     <div className="column">
-                        <figure className="image is-marginless is-fullwidth">
+                        <figure className={this.getFigureClassNames('JACK_OF_DIAMONDS')} onClick={() => this.switchCard('JACK_OF_DIAMONDS')}>
                             <img src="/figures/jack_of_diamonds2.svg" />
                         </figure>
                     </div>
                     <div className="column">
-                        <figure className="image is-marginless is-fullwidth">
+                        <figure className={this.getFigureClassNames('ACE')} onClick={() => this.switchCard('ACE')}>
                             <img src={`/figures/ace_of_${this.state.color}.svg`} />
                         </figure>
                     </div>
                     <div className="column">
-                        <figure className="image is-marginless is-fullwidth">
+                        <figure className={this.getFigureClassNames('10')} onClick={() => this.switchCard('10')}>
                             <img src={`/figures/10_of_${this.state.color}.svg`} />
                         </figure>
                     </div>
                     <div className="column">
-                        <figure className="image is-marginless is-fullwidth">
+                        <figure className={this.getFigureClassNames('KING')} onClick={() => this.switchCard('KING')}>
                             <img src={`/figures/king_of_${this.state.color}2.svg`} />
                         </figure>
                     </div>
                     <div className="column">
-                        <figure className="image is-marginless is-fullwidth">
-                            <img src={`/figures/queen_of_${this.state.color}.svg`} />
+                        <figure className={this.getFigureClassNames('QUEEN')} onClick={() => this.switchCard('QUEEN')}>
+                            <img src={`/figures/queen_of_${this.state.color}2.svg`} />
                         </figure>
                     </div>
                     <div className="column">
-                        <figure className="image is-marginless is-fullwidth">
+                        <figure className={this.getFigureClassNames('9')} onClick={() => this.switchCard('9')}>
                             <img src={`/figures/9_of_${this.state.color}.svg`} />
                         </figure>
                     </div>
                     <div className="column">
-                        <figure className="image is-marginless is-fullwidth">
+                        <figure className={this.getFigureClassNames('8')} onClick={() => this.switchCard('8')}>
                             <img src={`/figures/8_of_${this.state.color}.svg`} />
                         </figure>
                     </div>
                     <div className="column">
-                        <figure className="image is-marginless is-fullwidth">
+                        <figure className={this.getFigureClassNames('7')} onClick={() => this.switchCard('7')}>
                             <img src={`/figures/7_of_${this.state.color}.svg`} />
                         </figure>
                     </div>
@@ -192,22 +213,22 @@ class MultiplierCalculator extends React.Component {
                 { this.state.typeOfGame === 'grand' && 
                 <div className="columns">
                     <div className="column">
-                        <figure className="image is-marginless is-fullwidth">
+                        <figure className={this.getFigureClassNames('JACK_OF_CLUBS')} onClick={() => this.switchCard('JACK_OF_CLUBS')}>
                             <img src="/figures/jack_of_clubs2.svg" />
                         </figure>
                     </div>
                     <div className="column">
-                        <figure className="image is-marginless is-fullwidth">
+                        <figure className={this.getFigureClassNames('JACK_OF_SPADES')} onClick={() => this.switchCard('JACK_OF_SPADES')}>
                             <img src="/figures/jack_of_spades2.svg" />
                         </figure>
                     </div>
                     <div className="column">
-                        <figure className="image is-marginless is-fullwidth">
+                        <figure className={this.getFigureClassNames('JACK_OF_HEARTS')} onClick={() => this.switchCard('JACK_OF_HEARTS')}>
                             <img src="/figures/jack_of_hearts2.svg" />
                         </figure>
                     </div>
                     <div className="column">
-                        <figure className="image is-marginless is-fullwidth">
+                        <figure className={this.getFigureClassNames('JACK_OF_DIAMONDS')} onClick={() => this.switchCard('JACK_OF_DIAMONDS')}>
                             <img src="/figures/jack_of_diamonds2.svg" />
                         </figure>
                     </div>
@@ -226,6 +247,9 @@ class MultiplierCalculator extends React.Component {
                         </progress>
                     </div>
                 </div>
+                <h3 className="title is-3">
+                    { this.state.mode === 'with' ? 'Z' : 'BEZ'} { this.state.peak }
+                </h3>
             </div>
         )
     }
