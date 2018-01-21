@@ -18393,7 +18393,7 @@ var MultiplierCalculator = function (_React$Component) {
     }, {
         key: 'getFigureClassNames',
         value: function getFigureClassNames(card) {
-            return (0, _classnames2.default)('image', 'is-marginless', 'is-fullwidth', 'multiplier-calculator__figure', { 'multiplier-calculator__figure--selected': this.state.selectedCards.indexOf(card) !== -1 });
+            return (0, _classnames2.default)('image', 'is-marginless', 'multiplier-calculator__figure', { 'multiplier-calculator__figure--selected': this.state.selectedCards.indexOf(card) !== -1 });
         }
     }, {
         key: 'getPeakProgressClassNames',

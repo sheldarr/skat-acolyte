@@ -101,7 +101,6 @@ class MultiplierCalculator extends React.Component {
         return classNames(
             'image',
             'is-marginless',
-            'is-fullwidth',
             'multiplier-calculator__figure',
             { 'multiplier-calculator__figure--selected': this.state.selectedCards.indexOf(card) !== -1} 
         )
