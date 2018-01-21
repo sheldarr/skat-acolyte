@@ -102,6 +102,7 @@ class MultiplierCalculator extends React.Component {
             'image',
             'is-marginless',
             'is-fullwidth',
+            'multiplier-calculator__figure',
             { 'multiplier-calculator__figure--selected': this.state.selectedCards.indexOf(card) !== -1} 
         )
     }
@@ -119,35 +120,41 @@ class MultiplierCalculator extends React.Component {
     render() {
         return (
             <div className="multiplier-calculator">
-                <div className="field">
-                    <label htmlFor="type-of-game" className="label">Rodzaj gry</label>
-                    <div className="control">
-                        <div className="select">
-                            <select 
-                                id="type-of-game"
-                                value={this.state.typeOfGame}
-                                onChange={this.handleTypeOfGameChange}
-                            >
-                                <option value="color">Kolor</option>
-                                <option value="grand">Grand</option>
-                            </select>
+                <div className="columns">
+                    <div className="column is-one-fifth">
+                        <div className="field">
+                            <label htmlFor="type-of-game" className="label">Rodzaj gry</label>
+                            <div className="control">
+                                <div className="select is-fullwidth">
+                                    <select 
+                                        id="type-of-game"
+                                        value={this.state.typeOfGame}
+                                        onChange={this.handleTypeOfGameChange}
+                                    >
+                                        <option value="color">Kolor</option>
+                                        <option value="grand">Grand</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="field">
-                    <label htmlFor="color" className="label">Kolor</label>
-                    <div className="control">
-                        <div className="select">
-                            <select 
-                                id="color"
-                                value={this.state.color}
-                                onChange={this.handleColorChange}
-                            >
-                                <option value="clubs">Trefl (Kreuz, Krojc)</option>
-                                <option value="spades">Pik (Grün, Grin)</option>
-                                <option value="hearts">Kier (Herz, Herc)</option>
-                                <option value="diamonds">Karo (Schellen, Szel)</option>
-                            </select>
+                    <div className="column is-one-fifth">
+                        <div className="field">
+                            <label htmlFor="color" className="label">Kolor</label>
+                            <div className="control">
+                                <div className="select is-fullwidth">
+                                    <select 
+                                        id="color"
+                                        value={this.state.color}
+                                        onChange={this.handleColorChange}
+                                    >
+                                        <option value="clubs">Trefl (Kreuz, Krojc)</option>
+                                        <option value="spades">Pik (Grün, Grin)</option>
+                                        <option value="hearts">Kier (Herz, Herc)</option>
+                                        <option value="diamonds">Karo (Schellen, Szel)</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

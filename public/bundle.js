@@ -18393,7 +18393,7 @@ var MultiplierCalculator = function (_React$Component) {
     }, {
         key: 'getFigureClassNames',
         value: function getFigureClassNames(card) {
-            return (0, _classnames2.default)('image', 'is-marginless', 'is-fullwidth', { 'multiplier-calculator__figure--selected': this.state.selectedCards.indexOf(card) !== -1 });
+            return (0, _classnames2.default)('image', 'is-marginless', 'is-fullwidth', 'multiplier-calculator__figure', { 'multiplier-calculator__figure--selected': this.state.selectedCards.indexOf(card) !== -1 });
         }
     }, {
         key: 'getPeakProgressClassNames',
@@ -18413,79 +18413,91 @@ var MultiplierCalculator = function (_React$Component) {
                 { className: 'multiplier-calculator' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'field' },
-                    _react2.default.createElement(
-                        'label',
-                        { htmlFor: 'type-of-game', className: 'label' },
-                        'Rodzaj gry'
-                    ),
+                    { className: 'columns' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'control' },
+                        { className: 'column is-one-fifth' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'select' },
+                            { className: 'field' },
                             _react2.default.createElement(
-                                'select',
-                                {
-                                    id: 'type-of-game',
-                                    value: this.state.typeOfGame,
-                                    onChange: this.handleTypeOfGameChange
-                                },
+                                'label',
+                                { htmlFor: 'type-of-game', className: 'label' },
+                                'Rodzaj gry'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'control' },
                                 _react2.default.createElement(
-                                    'option',
-                                    { value: 'color' },
-                                    'Kolor'
-                                ),
-                                _react2.default.createElement(
-                                    'option',
-                                    { value: 'grand' },
-                                    'Grand'
+                                    'div',
+                                    { className: 'select is-fullwidth' },
+                                    _react2.default.createElement(
+                                        'select',
+                                        {
+                                            id: 'type-of-game',
+                                            value: this.state.typeOfGame,
+                                            onChange: this.handleTypeOfGameChange
+                                        },
+                                        _react2.default.createElement(
+                                            'option',
+                                            { value: 'color' },
+                                            'Kolor'
+                                        ),
+                                        _react2.default.createElement(
+                                            'option',
+                                            { value: 'grand' },
+                                            'Grand'
+                                        )
+                                    )
                                 )
                             )
                         )
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'field' },
-                    _react2.default.createElement(
-                        'label',
-                        { htmlFor: 'color', className: 'label' },
-                        'Kolor'
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'control' },
+                        { className: 'column is-one-fifth' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'select' },
+                            { className: 'field' },
                             _react2.default.createElement(
-                                'select',
-                                {
-                                    id: 'color',
-                                    value: this.state.color,
-                                    onChange: this.handleColorChange
-                                },
+                                'label',
+                                { htmlFor: 'color', className: 'label' },
+                                'Kolor'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'control' },
                                 _react2.default.createElement(
-                                    'option',
-                                    { value: 'clubs' },
-                                    'Trefl (Kreuz, Krojc)'
-                                ),
-                                _react2.default.createElement(
-                                    'option',
-                                    { value: 'spades' },
-                                    'Pik (Gr\xFCn, Grin)'
-                                ),
-                                _react2.default.createElement(
-                                    'option',
-                                    { value: 'hearts' },
-                                    'Kier (Herz, Herc)'
-                                ),
-                                _react2.default.createElement(
-                                    'option',
-                                    { value: 'diamonds' },
-                                    'Karo (Schellen, Szel)'
+                                    'div',
+                                    { className: 'select is-fullwidth' },
+                                    _react2.default.createElement(
+                                        'select',
+                                        {
+                                            id: 'color',
+                                            value: this.state.color,
+                                            onChange: this.handleColorChange
+                                        },
+                                        _react2.default.createElement(
+                                            'option',
+                                            { value: 'clubs' },
+                                            'Trefl (Kreuz, Krojc)'
+                                        ),
+                                        _react2.default.createElement(
+                                            'option',
+                                            { value: 'spades' },
+                                            'Pik (Gr\xFCn, Grin)'
+                                        ),
+                                        _react2.default.createElement(
+                                            'option',
+                                            { value: 'hearts' },
+                                            'Kier (Herz, Herc)'
+                                        ),
+                                        _react2.default.createElement(
+                                            'option',
+                                            { value: 'diamonds' },
+                                            'Karo (Schellen, Szel)'
+                                        )
+                                    )
                                 )
                             )
                         )

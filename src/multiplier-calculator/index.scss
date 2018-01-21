@@ -1,5 +1,11 @@
 .multiplier-calculator {
+    .multiplier-calculator__figure {
+        cursor: pointer;
+        padding: 0.2rem;
+    }
+
     .multiplier-calculator__figure--selected {
-        border: 1px solid green;
+        border: 0.2rem solid green;
+        padding: 0;
     }
 }
